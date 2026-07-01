@@ -1,0 +1,6 @@
+{
+  "name": "Gestión de Proyectos",
+  "description": "Sistema de gestión de proyectos y tareas ágiles con Kanban y roles de usuario para PYMEs argentinas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
