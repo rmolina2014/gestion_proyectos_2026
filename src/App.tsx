@@ -90,7 +90,6 @@ export default function App() {
 
   // Dropdown states
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isSimulateOpen, setIsSimulateOpen] = useState(false);
 
   // Sync to Storage on changes
   useEffect(() => {
@@ -123,34 +122,6 @@ export default function App() {
   const handleLogout = () => {
     setCurrentUser(null);
     setIsProfileOpen(false);
-    setIsSimulateOpen(false);
-  };
-
-  // Hot-swapping active role for fast demonstration
-  const handleSimulateUser = (userId: string) => {
-    const selected = users.find(u => u.id === userId);
-    if (selected && selected.estado === 'Activo') {
-      setCurrentUser(selected);
-      setIsSimulateOpen(false);
-    }
-  };
-
-  // Reset demo state back to seeds
-  const handleResetDemoState = () => {
-    if (window.confirm('¿Está seguro de restaurar el estado inicial? Esto borrará tus cambios locales.')) {
-      setUsers(initialUsers);
-      setProjects(initialProjects);
-      setRequirements(initialRequirements);
-      setTasks(initialTasks);
-      
-      // Keep logged in as matching seed or log out
-      if (currentUser) {
-        const matching = initialUsers.find(u => u.email === currentUser.email);
-        setCurrentUser(matching || initialUsers[0]);
-      }
-      
-      alert('Base de datos restablecida correctamente.');
-    }
   };
 
   // CHANGE PASSWORD (Módulo 1)
@@ -382,61 +353,11 @@ export default function App() {
             {/* Quick switcher & Profile Actions */}
             <div className="flex items-center gap-4">
               
-              {/* Quick Simulation Swapper Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => {
-                    setIsSimulateOpen(!isSimulateOpen);
-                    setIsProfileOpen(false);
-                  }}
-                  className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700/80 rounded-lg text-xs font-mono text-slate-300 border border-slate-700/50 cursor-pointer"
-                  id="header-role-simulator"
-                >
-                  <RefreshCw size={12} className="text-blue-400 animate-spin-slow" />
-                  <span>Simular: <strong>{currentUser.nombre} ({currentUser.rol})</strong></span>
-                  <ChevronDown size={12} />
-                </button>
-
-                {isSimulateOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-2 z-50 animate-scale-in text-xs font-sans">
-                    <div className="px-3 py-1.5 border-b border-slate-700 text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">
-                      Cambiar de Rol Rápido
-                    </div>
-                    <div className="space-y-1 mt-1">
-                      {users.filter(u => u.estado === 'Activo').map((u) => (
-                        <button
-                          key={u.id}
-                          onClick={() => handleSimulateUser(u.id)}
-                          className={`w-full text-left px-3 py-2 rounded-lg flex items-center justify-between hover:bg-slate-700 cursor-pointer ${
-                            u.id === currentUser.id ? 'bg-slate-700 text-white font-bold' : 'text-slate-300'
-                          }`}
-                        >
-                          <div>
-                            <div>{u.nombre} {u.apellido}</div>
-                            <div className="text-[9px] text-slate-400 font-mono">{u.rol}</div>
-                          </div>
-                          {u.id === currentUser.id && <span className="w-2 h-2 rounded-full bg-emerald-400"></span>}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="p-1 border-t border-slate-700 mt-2">
-                      <button
-                        onClick={handleResetDemoState}
-                        className="w-full text-center py-1.5 bg-red-950/40 hover:bg-red-900/40 border border-red-900/30 text-red-400 text-[10px] font-mono rounded cursor-pointer transition-all"
-                      >
-                        Restablecer Datos Demo
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* User Profile dropdown */}
               <div className="relative">
                 <button
                   onClick={() => {
                     setIsProfileOpen(!isProfileOpen);
-                    setIsSimulateOpen(false);
                   }}
                   className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer"
                   id="profile-dropdown-trigger"
