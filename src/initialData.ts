@@ -1,3 +1,9 @@
+/**
+ * IMPORTANTE / PROTECCIÓN DE PRODUCCIÓN:
+ * NO modificar ni enviar cambios a este archivo de datos de inicio en futuros commits a GitHub.
+ * Modificar o sobreescribir estos datos impacta en las sesiones de los usuarios en producción
+ * y puede alterar información importante ya persistida en la plataforma.
+ */
 import { User, Project, Requirement, Task } from './types';
 
 export const initialUsers: User[] = [
