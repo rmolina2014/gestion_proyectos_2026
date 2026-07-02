@@ -54,19 +54,23 @@ import {
 
 // Storage helper
 const getStorageItem = <T,>(key: string, defaultValue: T): T => {
-  const item = localStorage.getItem(`austral_pyme_${key}`);
-  if (item) {
-    try {
+  try {
+    const item = localStorage.getItem(`austral_pyme_${key}`);
+    if (item && item !== 'undefined' && item !== 'null') {
       return JSON.parse(item) as T;
-    } catch {
-      return defaultValue;
     }
+  } catch (error) {
+    console.error(`Error leyendo ${key} de localStorage:`, error);
   }
   return defaultValue;
 };
 
 const saveStorageItem = <T,>(key: string, value: T) => {
-  localStorage.setItem(`austral_pyme_${key}`, JSON.stringify(value));
+  try {
+    localStorage.setItem(`austral_pyme_${key}`, JSON.stringify(value));
+  } catch (error) {
+    console.error(`Error guardando ${key} en localStorage:`, error);
+  }
 };
 
 export default function App() {
@@ -120,6 +124,13 @@ export default function App() {
   };
 
   const handleLogout = () => {
+    // Forzar guardado sincrónico del estado actual antes de cerrar sesión
+    saveStorageItem('users', users);
+    saveStorageItem('projects', projects);
+    saveStorageItem('requirements', requirements);
+    saveStorageItem('tasks', tasks);
+    saveStorageItem('currentUser', null);
+
     setCurrentUser(null);
     setIsProfileOpen(false);
   };
