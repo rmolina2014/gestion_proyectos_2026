@@ -132,7 +132,7 @@ export default function LoginView({ users, onLoginSuccess }: LoginViewProps) {
                 <input
                   type="email"
                   required
-                  placeholder="sofia@sistemas-austral.com.ar"
+                  placeholder="usuarios@sistemas.com.ar"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 font-sans"
@@ -188,7 +188,7 @@ export default function LoginView({ users, onLoginSuccess }: LoginViewProps) {
         {/* Footer */}
         <div className="bg-slate-50 p-4 border-t border-slate-150 text-center rounded-b-2xl">
           <span className="text-[10px] text-slate-400 font-mono">
-            Plataforma de Control © 2026 • Buenos Aires, Argentina
+            Plataforma de Control © 2026 • HacerDigital - San Juan, Argentina
           </span>
         </div>
       </div>
